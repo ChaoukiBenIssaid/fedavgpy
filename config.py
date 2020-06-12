@@ -2,6 +2,7 @@
 DATASETS = ['sent140', 'nist', 'shakespeare',
             'mnist', 'synthetic', 'cifar10']
 TRAINERS = {'fedavg': 'FedAvgTrainer',
+            'fedstart': 'FedSTART',
             'fedavg4': 'FedAvg4Trainer',
             'fedavg5': 'FedAvg5Trainer',
             'fedavg9': 'FedAvg9Trainer',}
