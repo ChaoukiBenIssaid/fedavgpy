@@ -19,7 +19,7 @@ def read_options():
     parser.add_argument('--dataset',
                         help='name of dataset;',
                         type=str,
-                        default='mnist_all_data_0_equal_niid')
+                        default='synthetic_alpha0_beta0_iid')
     parser.add_argument('--model',
                         help='name of model;',
                         type=str,
@@ -27,7 +27,7 @@ def read_options():
     parser.add_argument('--wd',
                         help='weight decay parameter;',
                         type=float,
-                        default=0.001)
+                        default=0.0)
     parser.add_argument('--gpu',
                         action='store_true',
                         default=False,
@@ -55,7 +55,7 @@ def read_options():
     parser.add_argument('--clients_per_round',
                         help='number of clients trained per round;',
                         type=int,
-                        default=10)
+                        default=100)
     parser.add_argument('--batch_size',
                         help='batch size when clients train on data;',
                         type=int,
