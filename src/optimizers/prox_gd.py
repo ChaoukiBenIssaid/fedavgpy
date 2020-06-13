@@ -38,7 +38,7 @@ class START(Optimizer):
                 if p.grad is None:
                     continue
                 d_p = p.grad.data
-                p_diff = p - pc
+                p_diff = p.data - pc
                 p_diff.mul_(mu)
                 new_d_p = d_p + p_diff
                 p.data.add_(-lr, new_d_p)
