@@ -57,10 +57,15 @@ class START(Optimizer):
         for param_group in self.param_groups:
             param_group['lr'] = self.lr
 
+    def inverse_prop_decay_learning_rate_exp(self, round_i):
+        for param_group in self.param_groups:
+            #param_group['lr'] = self.lr/(round_i+1)
+            param_group['lr'] =self.lr * (0.5 ** (round_i))
+
     def inverse_prop_decay_learning_rate(self, round_i):
         for param_group in self.param_groups:
             param_group['lr'] = self.lr/(round_i+1)
-
+            
     def set_lr(self, lr):
         for param_group in self.param_groups:
             param_group['lr'] = lr

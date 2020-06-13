@@ -45,7 +45,7 @@ class FedSTART(BaseTrainer):
 
             # Update latest model
             self.latest_model = self.aggregate(solns)
-            self.optimizer.adjust_learning_rate(round_i)
+            self.optimizer.inverse_prop_decay_learning_rate_exp(round_i)
 
         # Test final model on train data
         self.test_latest_model_on_traindata(self.num_round)
