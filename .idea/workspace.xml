@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6ea5af6-52d2-4908-854b-66203d7855ae" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/optimizers/prox_gd.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimizers/prox_gd.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainers/fedstart.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainers/fedstart.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
