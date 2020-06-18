@@ -112,8 +112,7 @@ class Worker(object):
             loss.backward()
             torch.nn.utils.clip_grad_norm(self.model.parameters(), 60)
             self.optimizer.step()
-
-             _, predicted = torch.max(pred, 1)
+            _, predicted = torch.max(pred, 1)
             correct = predicted.eq(y).sum().item()
             target_size = y.size(0)
 
