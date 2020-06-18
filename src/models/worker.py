@@ -159,12 +159,27 @@ class LrdWorker(Worker):
         self.num_epoch = options['num_epoch']
         super(LrdWorker, self).__init__(model, optimizer, options)
     
-    def local_train(self, train_dataloader, **kwargs):
+    def local_train(self, train_dataloader, round_i, **kwargs):
         # current_step = kwargs['T']
         self.model.train()
         train_loss = train_acc = train_total = 0
-        for i in range(self.num_epoch*10):
-            x, y = next(iter(train_dataloader))
+        for epoch in range(self.num_epoch):
+            train_loss = train_acc = train_total = 0
+            #for batch_idx, (x, y) in enumerate(train_dataloader):
+                # from IPython import embed
+                # embed()
+            dl_iter = iter(train_dataloader)
+            (x, y) = next(dl_iter)
+
+            if self.decay_lr == 1:
+                decayed_lr = self.lr/(1 + round_i*self.num_epoch + epoch)
+                self.optimizer.set_lr(decayed_lr)
+            else:
+                self.optimizer.set_lr(self.lr)
+
+            current_lr = self.optimizer.get_current_lr()
+            if epoch == 0:
+                print("round: {}, iter: {} lr: {}".format(round_i, epoch, current_lr))
             
             if self.gpu:
                 x, y = x.cuda(), y.cuda()
@@ -175,7 +190,6 @@ class LrdWorker(Worker):
             loss = criterion(pred, y)
             loss.backward()
             torch.nn.utils.clip_grad_norm(self.model.parameters(), 60)
-            # lr = 100/(400+current_step+i)
             self.optimizer.step()
             
             _, predicted = torch.max(pred, 1)
