@@ -32,16 +32,20 @@ class START(Optimizer):
 
         for group in self.param_groups:
             lr = group['lr']
-            c1 = mu/(lr+mu)
-            c2 = lr/(lr+mu)
-            c3 = c1 * lr
+            # c1 = mu/(lr+mu)
+            # c2 = lr/(lr+mu)
+            # c3 = c1 * lr
+            c = lr/mu
             for p, pc in zip(group['params'], group['prox_center']):
                 if p.grad is None:
                     continue
                 d_p = p.grad.data
-                p.data.mul_(c1)
-                p.data.add_(c2, pc)
-                p.data.add_(-c3, d_p)
+                p.data.mul_(1-c)
+                p.data.add_(-lr, d_p)
+                p.data.add_(c, pc)
+                # p.data.mul_(c1)
+                # p.data.add_(c2, pc)
+                # p.data.add_(-c3, d_p)
 
 
         # p.data <- (mu * p.data + lr * pc - lr * mu * d_p) / (lr + mu)
