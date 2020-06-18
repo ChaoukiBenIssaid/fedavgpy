@@ -31,8 +31,8 @@ class FedSTART(BaseTrainer):
         for round_i in range(self.num_round):
 
             # Test latest model on train data
-            self.test_latest_model_on_traindata(round_i)
-            self.test_latest_model_on_evaldata(round_i)
+            # self.test_latest_model_on_traindata(round_i)
+            # self.test_latest_model_on_evaldata(round_i)
 
             # Choose K clients prop to data size
             selected_clients = self.select_clients(seed=round_i)
@@ -41,7 +41,7 @@ class FedSTART(BaseTrainer):
             solns, stats = self.local_train(round_i, selected_clients)
 
             # Track communication cost
-            self.metrics.extend_commu_stats(round_i, stats)
+            # self.metrics.extend_commu_stats(round_i, stats)
 
             # Update latest model
             self.latest_model = self.aggregate(solns)
