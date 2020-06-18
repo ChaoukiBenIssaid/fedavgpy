@@ -48,6 +48,10 @@ def read_options():
                         help='number of rounds to simulate;',
                         type=int,
                         default=200)
+    parser.add_argument('--decay_lr',
+                        help='whether to decay the step size according to 1/t;',
+                        type=int,
+                        default=0)
     parser.add_argument('--eval_every',
                         help='evaluate every ____ rounds;',
                         type=int,
@@ -59,7 +63,7 @@ def read_options():
     parser.add_argument('--batch_size',
                         help='batch size when clients train on data;',
                         type=int,
-                        default=64)
+                        default=1)
     parser.add_argument('--num_epoch',
                         help='number of epochs when clients train on data;',
                         type=int,

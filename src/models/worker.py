@@ -19,6 +19,8 @@ class Worker(object):
         self.model = model
         self.optimizer = optimizer
         self.num_epoch = options['num_epoch']
+        self.lr = options['lr']
+        self.decay_lr = options["decay_lr"]
         self.gpu = options['gpu'] if 'gpu' in options else False
 
         # Setup local model and evaluate its statics
@@ -64,7 +66,7 @@ class Worker(object):
         flat_grads = get_flat_grad(loss, self.model.parameters(), create_graph=True)
         return flat_grads
 
-    def local_train(self, train_dataloader, **kwargs):
+    def local_train(self, train_dataloader, round_i, **kwargs):
         """Train model locally and return new parameter and computation cost
 
         Args:
@@ -80,31 +82,44 @@ class Worker(object):
         train_loss = train_acc = train_total = 0
         for epoch in range(self.num_epoch):
             train_loss = train_acc = train_total = 0
-            for batch_idx, (x, y) in enumerate(train_dataloader):
+            #for batch_idx, (x, y) in enumerate(train_dataloader):
                 # from IPython import embed
                 # embed()
-                if self.gpu:
-                    x, y = x.cuda(), y.cuda()
+            dl_iter = iter(train_dataloader)
+            (x, y) = next(dl_iter)
 
-                self.optimizer.zero_grad()
-                pred = self.model(x)
+            if self.decay_lr == 1:
+                decayed_lr = self.lr/(1 + round_i*self.num_epoch + epoch)
+                self.optimizer.set_lr(decayed_lr)
+            else:
+                self.optimizer.set_lr(self.lr)
 
-                if torch.isnan(pred.max()):
-                    from IPython import embed
-                    embed()
+            current_lr = self.optimizer.get_current_lr()
+            if epoch == 0:
+                print("round: {}, iter: {} lr: {}".format(round_i, epoch, current_lr))
 
-                loss = criterion(pred, y)
-                loss.backward()
-                torch.nn.utils.clip_grad_norm(self.model.parameters(), 60)
-                self.optimizer.step()
+            if self.gpu:
+                x, y = x.cuda(), y.cuda()
 
-                _, predicted = torch.max(pred, 1)
-                correct = predicted.eq(y).sum().item()
-                target_size = y.size(0)
+            self.optimizer.zero_grad()
+            pred = self.model(x)
 
-                train_loss += loss.item() * y.size(0)
-                train_acc += correct
-                train_total += target_size
+            if torch.isnan(pred.max()):
+                from IPython import embed
+                embed()
+
+            loss = criterion(pred, y)
+            loss.backward()
+            torch.nn.utils.clip_grad_norm(self.model.parameters(), 60)
+            self.optimizer.step()
+
+             _, predicted = torch.max(pred, 1)
+            correct = predicted.eq(y).sum().item()
+            target_size = y.size(0)
+
+            train_loss += loss.item() * y.size(0)
+            train_acc += correct
+            train_total += target_size
 
         local_solution = self.get_flat_model_params()
         param_dict = {"norm": torch.norm(local_solution).item(),

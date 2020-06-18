@@ -113,7 +113,7 @@ class BaseTrainer(object):
                 self.optimizer.update_prox_center()
 
             # Solve minimization locally
-            soln, stat = c.local_train()
+            soln, stat = c.local_train(round_i)
             if self.print_result:
                 print("Round: {:>2d} | CID: {: >3d} ({:>2d}/{:>2d})| "
                       "Param: norm {:>.4f} ({:>.4f}->{:>.4f})| "

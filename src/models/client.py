@@ -49,7 +49,7 @@ class Client(object):
 
         return (len(self.train_data), grads), stats
 
-    def local_train(self, **kwargs):
+    def local_train(self, round_i, **kwargs):
         """Solves local optimization problem
 
         Returns:
@@ -64,7 +64,7 @@ class Client(object):
 
         bytes_w = self.worker.model_bytes
         begin_time = time.time()
-        local_solution, worker_stats = self.worker.local_train(self.train_dataloader, **kwargs)
+        local_solution, worker_stats = self.worker.local_train(self.train_dataloader, round_i, **kwargs)
         end_time = time.time()
         bytes_r = self.worker.model_bytes
 

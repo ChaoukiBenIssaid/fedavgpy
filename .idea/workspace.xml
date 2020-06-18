@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6ea5af6-52d2-4908-854b-66203d7855ae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/worker.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/worker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainers/base.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainers/base.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/trainers/fedavg5.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainers/fedavg5.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/trainers/fedstart.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/trainers/fedstart.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,5 +64,9 @@
       <screen x="0" y="0" width="1536" height="826" />
     </state>
     <state x="548" y="170" key="FileChooserDialogImpl/0.0.1536.826@0.0.1536.826" timestamp="1591974343905" />
+    <state x="349" y="168" key="com.intellij.ide.util.TipDialog" timestamp="1592468097779">
+      <screen x="0" y="0" width="1280" height="682" />
+    </state>
+    <state x="349" y="168" key="com.intellij.ide.util.TipDialog/0.0.1280.682@0.0.1280.682" timestamp="1592468097779" />
   </component>
 </project>
