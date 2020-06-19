@@ -174,8 +174,11 @@ class LrdWorker(Worker):
             if self.decay_lr == 1:
                 decayed_lr = self.lr/(1 + round_i*self.num_epoch + epoch)
                 self.optimizer.set_lr(decayed_lr)
-            else:
+            elif self.decay_lr == 0:
                 self.optimizer.set_lr(self.lr)
+            else:
+                if epoch == 0:
+                    self.optimizer.inverse_prop_decay_learning_rate(round_i)
 
             current_lr = self.optimizer.get_current_lr()
             if epoch == 0:
